@@ -17,7 +17,7 @@ import { fetchAllTodos} from './api'
     }
 
     const [currentUser, setCurrentUser] = useState(user)
-    const [activePage, setActivePage] = useState(2)
+    const [activePage, setActivePage] = useState(1)
     const [todos, setTodos] = useState([])
     const [userTodos, setUserTodos] = useState([])
 
@@ -47,13 +47,14 @@ import { fetchAllTodos} from './api'
 
     }, [activePage])
 
-    if(currentUser && activePage === 2){
-      const userTasks = todos.filter((todo) => todo.owner_id === currentUser.id)
-      setUserTodos(userTasks)
-    }
+    // if(currentUser && activePage === 2){
+    //   const userTasks = todos.filter((todo) => todo.owner_id === currentUser.id)
+    //   setUserTodos(userTasks)
+    // }
 
     const login_Page = <LoginPage setCurrentUser={setCurrentUser} setActivePage={setActivePage} />
     const home_Page = <HomePage currentUser={currentUser} userTodos={userTodos} />
+    // const home_Page = <HomePage currentUser={currentUser} userTodos={userTodos} />
 
     const components = {
       1: login_Page,
