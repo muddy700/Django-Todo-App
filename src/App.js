@@ -1,19 +1,30 @@
 import React , { useState, useEffect } from 'react'
 import { LoginPage} from './pages/loginPage'
 import { HomePage} from './pages/homePage'
-import { fetchAllUsers} from './api'
 import { message } from 'antd';
 import './App.css';
+import { fetchAllTodos} from './api'
+
+
 
   const App = () => {
 
-    const [users, setUsers] = useState([])
-    const [activePage, setActivePage] = useState(1)
+    const user = {
+      id : '',
+      username: '',
+      password: '',
+      email: ''
+    }
 
-    const pullUsers = async () => {
+    const [currentUser, setCurrentUser] = useState(user)
+    const [activePage, setActivePage] = useState(2)
+    const [todos, setTodos] = useState([])
+    const [userTodos, setUserTodos] = useState([])
+
+    const pullTodos = async () => {
         try {
-            const users = await fetchAllUsers()
-            setUsers(users)
+            const todos = await fetchAllTodos()
+            setTodos(todos)
         } catch (err) {
             if (err && err.response.data) {
                 // error from the server
@@ -30,16 +41,21 @@ import './App.css';
         }
     }
 
-useEffect(() => {
+    useEffect(() => {
 
-      pullUsers()
+        pullTodos()
 
-    } , [])
+    }, [activePage])
 
-    const login_Page = <LoginPage />
-    const home_Page = <HomePage />
+    if(currentUser && activePage === 2){
+      const userTasks = todos.filter((todo) => todo.owner_id === currentUser.id)
+      setUserTodos(userTasks)
+    }
 
-     const components = {
+    const login_Page = <LoginPage setCurrentUser={setCurrentUser} setActivePage={setActivePage} />
+    const home_Page = <HomePage currentUser={currentUser} userTodos={userTodos} />
+
+    const components = {
       1: login_Page,
       2: home_Page,
     }
@@ -52,8 +68,3 @@ useEffect(() => {
 }
 
 export default App;
-
-        // <Title level={1}>Hey!, Brunga!.</Title>
-        // <Title level={3}>Your Todos Are Listed Below</Title>
-        // {users.map((user) => {
-        //   return <Title level={5}>{user.username}</Title> } )} 

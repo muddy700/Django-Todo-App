@@ -14,8 +14,6 @@ code {
     monospace;
 }
 
-
-
 .App {
   text-align: center;
 }
@@ -29,4 +27,36 @@ code {
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+
+/* My CSS */
+
+.login-form {
+  /* max-width: 90%; */
+}
+
+.login-form-forgot {
+  float: left;
+}
+
+/* .ant-col-rtl .login-form-forgot {
+  float: left;
+} */
+
+.login-form-button {
+  width: 100%;
+  /* border-radius: 20%; */
+}
+
+.login-container{
+  /* text-align: center; */
+  /* padding-top: 10%;
+  padding-left: 40%; */
+  /* align-items: center; */
+  /* justify-content: center; */
+  /* height:unset; */
+  padding-top: 3%;
+  padding-bottom: 3%;
+  background-color: aliceblue;
 }

@@ -9,6 +9,10 @@ export async function fetchAllUsers() {
     const response = await baseLink.get("users")
     return response.data
 }
+export async function fetchAllTodos() {
+    const response = await baseLink.get("todos")
+    return response.data
+}
 
 export async function getSingleUser(id) {
     const response = await baseLink.get(`users/${id}`)
