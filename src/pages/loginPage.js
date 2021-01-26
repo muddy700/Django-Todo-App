@@ -36,26 +36,24 @@ export const LoginPage = (props) => {
 
         pullUsers()
 
-    }, [])
+    }, [users.length])
 
     const onFinish = (values) => {
-        // console.log('Received values of form: ', values);
-        // const loggedUser = users.find((user) => user.username === values.username )
-        // if (loggedUser ) {
-        //     setCurrentUser(loggedUser[0])
-        //     setActivePage(2)
-        // }
-        // else{
-        //     setActivePage(1)
-        //     message.error('Incorrect Username Or Password!')
-        // }
+        const loggedUser = users.find((user) => user.username === values.username && user.password === values.password )
+        if (loggedUser ) {
+            setCurrentUser(loggedUser)
+            setActivePage(2)
+        }
+        else{
+            setActivePage(1)
+            message.error('Incorrect Username Or Password!')
+        }
     };
 
     return (
         <div className="login-container">
         <Row>
             <Col xs={{offset: 0, span:24}} sm={4} md={4} lg={4} xl={{offset: 9, span: 6}}>
-            {/* {users.map((user) => <h1 key={user.id}>{user.username}</h1>)} */}
             <Card style={{width: '100%'}} bordered={false}>
                 <Avatar size={200} icon={<UserOutlined />} style={{marginBottom: '5%'}}/>
                 <Card
@@ -71,8 +69,9 @@ export const LoginPage = (props) => {
                     <Form.Item
                         name="username"
                         rules={[{ required: true, message: 'Please input your Username!' }]}
+                        
                     >
-                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" autoFocus/>
                     </Form.Item>
                     <Form.Item
                         name="password"
@@ -101,6 +100,7 @@ export const LoginPage = (props) => {
             </Card>
             </Col>
             </Row>
+            {/* {users.map((user) => <h1 key={user.id}>{user.username}</h1>)} */}
         </div>
     )
 }

@@ -10,8 +10,8 @@ import { fetchAllTodos} from './api'
   const App = () => {
 
     const user = {
-      id : '',
-      username: '',
+      id : 0,
+      username: 'Reactor',
       password: '',
       email: ''
     }
@@ -44,17 +44,18 @@ import { fetchAllTodos} from './api'
     useEffect(() => {
 
         pullTodos()
+        
+        filterUserTodos()
 
-    }, [activePage])
+    }, [currentUser.id])
 
-    // if(currentUser && activePage === 2){
-    //   const userTasks = todos.filter((todo) => todo.owner_id === currentUser.id)
-    //   setUserTodos(userTasks)
-    // }
+    const filterUserTodos = () => {
+      const userTasks = todos.filter((todo) => todo.owner_id === currentUser.id)
+      setUserTodos(userTasks)
+    }
 
     const login_Page = <LoginPage setCurrentUser={setCurrentUser} setActivePage={setActivePage} />
     const home_Page = <HomePage currentUser={currentUser} userTodos={userTodos} />
-    // const home_Page = <HomePage currentUser={currentUser} userTodos={userTodos} />
 
     const components = {
       1: login_Page,

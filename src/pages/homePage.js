@@ -8,7 +8,7 @@ export const HomePage = (props) => {
     const { currentUser, userTodos } = props
 
     // if(userTodos){
-        var todoList =  userTodos.map((todo)=> <Title level={6} key={todo.id}>todo.title</Title>)
+        const todoList =  userTodos.map((todo)=> <Title level={6} key={todo.id}>{todo.title}</Title>)
     // }
     return (
         <div>
