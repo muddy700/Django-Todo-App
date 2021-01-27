@@ -1,6 +1,7 @@
 import React , { useState, useEffect } from 'react'
 import { LoginPage} from './pages/loginPage'
 import { HomePage} from './pages/homePage'
+// import {  TodosPage} from "./pages/todosPage";
 import { message } from 'antd';
 import './App.css';
 import { fetchAllTodos} from './api'
@@ -55,7 +56,7 @@ import { fetchAllTodos} from './api'
     }
 
     const login_Page = <LoginPage setCurrentUser={setCurrentUser} setActivePage={setActivePage} />
-    const home_Page = <HomePage currentUser={currentUser} userTodos={userTodos} />
+    const home_Page = <HomePage currentUser={currentUser} userTodos={userTodos} setActivePage={setActivePage} />
 
     const components = {
       1: login_Page,

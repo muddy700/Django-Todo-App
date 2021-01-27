@@ -1,11 +1,12 @@
 import '../App.css';
-import { Typography, Card, Avatar, Form, Input, Button, Row, Col, message} from 'antd';
+import { Typography, Card, Avatar, Form, Input, Layout, Button, Row, Col, message} from 'antd';
 import { UserOutlined, LockOutlined  } from '@ant-design/icons';
 import React , { useState, useEffect } from 'react'
 import { fetchAllUsers} from '../api'
 
-
 const { Title} = Typography
+const { Header, Content, Footer } = Layout;
+
 
 export const LoginPage = (props) => {
     const { setCurrentUser, activePage, setActivePage} = props
@@ -51,6 +52,7 @@ export const LoginPage = (props) => {
     };
 
     return (
+        <>
         <div className="login-container">
         <Row>
             <Col xs={{offset: 0, span:24}} sm={4} md={4} lg={4} xl={{offset: 9, span: 6}}>
@@ -100,8 +102,12 @@ export const LoginPage = (props) => {
             </Card>
             </Col>
             </Row>
-            {/* {users.map((user) => <h1 key={user.id}>{user.username}</h1>)} */}
         </div>
+        <Layout>
+          <Footer className="footer-tag" > <i>Created By Brungas &copy;2021.</i> </Footer>
+        </Layout>
+
+          </>
     )
 }
 

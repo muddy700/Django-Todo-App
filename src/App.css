@@ -48,7 +48,7 @@ code {
 .login-container{
   padding-top: 3%;
   padding-bottom: 3%;
-  background-color: aliceblue;
+  background-color: lightgray;
 }
 
 .logo {
@@ -77,17 +77,18 @@ code {
 }
 
 .outer-card {
-  background-color: seagreen;
+  background-color: white;
 }
 
 .inner-card {
-  background-color: slateblue;
+  background-color: darkgrey;
   width: 100%;
 }
 .footer-tag {
   /* position: fixed; */
-  bottom: 0;
-  /* background-color: ; */
+  /* bottom: 0; */
+  background-color: darkslategrey;
+  height: 75px;
   text-align: center;
 }
 .menu-tag {
@@ -105,9 +106,9 @@ code {
 }
 
 .form-card {
-  background-color: yellow;
+  background-color: lightgray;
 }
 
 .counting-tag {
-  background-color: yellow;
+  background-color: lightgray;
 }
