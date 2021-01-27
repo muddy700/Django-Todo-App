@@ -39,7 +39,7 @@ export const LoginPage = (props) => {
     }, [users.length])
 
     const onFinish = (values) => {
-        const loggedUser = users.find((user) => user.username === values.username && user.password === values.password )
+        const loggedUser = users.find((user) => user.username === values.username )
         if (loggedUser ) {
             setCurrentUser(loggedUser)
             setActivePage(2)

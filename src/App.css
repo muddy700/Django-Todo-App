@@ -40,23 +40,74 @@ code {
   float: left;
 }
 
-/* .ant-col-rtl .login-form-forgot {
-  float: left;
-} */
-
 .login-form-button {
   width: 100%;
   /* border-radius: 20%; */
 }
 
 .login-container{
-  /* text-align: center; */
-  /* padding-top: 10%;
-  padding-left: 40%; */
-  /* align-items: center; */
-  /* justify-content: center; */
-  /* height:unset; */
   padding-top: 3%;
   padding-bottom: 3%;
   background-color: aliceblue;
+}
+
+.logo {
+  width: 120px;
+  height: 31px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px 24px 16px 0;
+  float: left;
+}
+
+.content-tag {
+  /* padding: 0 50px; */
+  background: #fff;
+  margin-top: 64px;
+  height: auto;
+
+}
+.content-div {
+  padding: 2;
+}
+
+.header-tag {
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+}
+
+.outer-card {
+  background-color: seagreen;
+}
+
+.inner-card {
+  background-color: slateblue;
+  width: 100%;
+}
+.footer-tag {
+  /* position: fixed; */
+  bottom: 0;
+  /* background-color: ; */
+  text-align: center;
+}
+.menu-tag {
+  margin-left: 15%;
+}
+
+.demo-infinite-container {
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  overflow: auto;
+  padding: 8px 24px;
+  height: 300px;
+  margin-bottom: 1%;
+  margin-top: 1%;
+}
+
+.form-card {
+  background-color: yellow;
+}
+
+.counting-tag {
+  background-color: yellow;
 }
