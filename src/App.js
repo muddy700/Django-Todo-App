@@ -6,8 +6,6 @@ import { message } from 'antd';
 import './App.css';
 import { fetchAllTodos} from './api'
 
-
-
   const App = () => {
 
     const user = {

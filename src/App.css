@@ -81,7 +81,7 @@ code {
 }
 
 .inner-card {
-  background-color: darkgrey;
+  background-color: cadetblue;
   width: 100%;
 }
 .footer-tag {
@@ -106,9 +106,9 @@ code {
 }
 
 .form-card {
-  background-color: lightgray;
+  background-color: yellow;
 }
 
 .counting-tag {
-  background-color: lightgray;
+  background-color: yellow;
 }

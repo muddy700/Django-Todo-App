@@ -4,5 +4,8 @@ const token = 'code'
 
 export default axios.create({
     baseURL: '/api/',
-    headers: {'Authorization': 'Bearer '+token}
+    // headers: {'Authorization': 'Bearer '+token}
+    // headers: {
+    //     'Content-Type': 'application/json',
+    // }
 });

@@ -5,12 +5,9 @@ import baseLink from './base'
 // http: //localhost:8000 /api/ users/
 // http: //localhost:8000 /api/ profiles/
 
+// For Users
 export async function fetchAllUsers() {
     const response = await baseLink.get("users")
-    return response.data
-}
-export async function fetchAllTodos() {
-    const response = await baseLink.get("todos")
     return response.data
 }
 
@@ -42,5 +39,24 @@ export async function deleteMult(payloasds) {
     const requests = payloasds.map((item) => baseLink.delete(`users/${item}`))
     const responseArray = await axios.all([...requests])
     return responseArray
+}
 
+
+// For Todos
+export async function fetchAllTodos() {
+    const response = await baseLink.get("todos")
+    return response.data
+}
+export async function createTodo(payload) {
+    const response = await baseLink.post("todos/", payload )
+    return response
+}
+
+export async function deleteTodo(id) {
+    const response = await baseLink.delete(`todos/${id}`)
+    return response
+}
+export async function editTodo(id, payload) {
+    const response = await baseLink.put(`todos/${id}`, payload )
+    return response
 }
