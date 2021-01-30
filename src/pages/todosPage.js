@@ -91,7 +91,7 @@ export const TodosPage = (props) => {
       }
       else{ //OnAdding New Todo
         try {
-          const newTodo = {...values, owner_id : currentUser.id, status : "True"}
+          const newTodo = {...values, owner_id : currentUser.id, status : "False"}
           const response = await createTodo(newTodo)
           if(response.status === 200){
             message.success('One Todo Added Successful')

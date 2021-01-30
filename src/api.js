@@ -17,9 +17,7 @@ export async function getSingleUser(id) {
 }
 
 export async function createUser(payload) {
-    const response = await baseLink.post("users/create", null, {
-        params: payload
-    })
+    const response = await baseLink.post("users/", payload )
     return response
 }
 

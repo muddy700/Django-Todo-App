@@ -2,14 +2,14 @@ import '../App.css';
 import { Typography, Card, Avatar, Form, Input, Layout, Button, Row, Col, message} from 'antd';
 import { UserOutlined, LockOutlined  } from '@ant-design/icons';
 import React , { useState, useEffect } from 'react'
-import { fetchAllUsers} from '../api'
+import { fetchAllUsers, createUser} from '../api'
 
 const { Title} = Typography
 const { Header, Content, Footer } = Layout;
 
 
-export const LoginPage = (props) => {
-    const { setCurrentUser, setActivePage} = props
+export const RegistrationPage = (props) => {
+    const { setActivePage} = props
     const [users, setUsers] = useState([])
 
 
@@ -39,16 +39,33 @@ export const LoginPage = (props) => {
 
     }, [users.length])
 
-    const onFinish = (values) => {
-        const loggedUser = users.find((user) => user.username === values.username )
-        if (loggedUser ) {
-            setCurrentUser(loggedUser)
-            setActivePage(2)
+    const onFinish = async (values) => {
+        const isPresent = users.find((user) => user.username === values.username)
+        // const loggedUser = users.find((user) => user.username === values.username )
+        if (isPresent) {
+            message.error('Username Already Exist.')
         }
         else{
+
+             try {
+          const response = await createUser(values)
+          if(response.status === 200){
+            message.success('Account Created Successful.')
+            // console.log(newTodo)
+            // console.log(response)
+            // const addedTodo = {...newTodo, id : response.data.id}
+            // console.log(addedTodo)
+            // setTodos([...todos, addedTodo])
+            // TodoForm.resetFields()
             setActivePage(1)
-            message.error('Incorrect Username Or Password!')
+            // setloading(false)
+          }
+        } 
+        catch (error) {
+          if(error && error.response.data)
+           alert(JSON.stringify(error.response.data))
         }
+            }
     };
 
     return (
@@ -59,7 +76,7 @@ export const LoginPage = (props) => {
             <Card style={{width: '100%'}} bordered={false}>
                 <Avatar size={200} icon={<UserOutlined />} style={{marginBottom: '5%'}}/>
                 <Card
-                    title="My Todo List"
+                    title="Account Informations"
                     style={{width: '100%'}}
                     headStyle={{color:'red'}}>
                 <Form
@@ -76,8 +93,17 @@ export const LoginPage = (props) => {
                         <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" autoFocus/>
                     </Form.Item>
                     <Form.Item
+                        name="email"
+                        rules={[{ required: true, message: 'Please input your Email!' }]}
+                    >
+                        <Input prefix={<LockOutlined className="site-form-item-icon" />}
+                        type="email"
+                        placeholder="Email"
+                        />
+                    </Form.Item>
+                    <Form.Item
                         name="password"
-                        rules={[{ required: true, message: 'Please input your Password!' }]}
+                        rules={[{ required: true, message: 'Please Input your Password!' }]}
                     >
                         <Input prefix={<LockOutlined className="site-form-item-icon" />}
                         type="password"
@@ -86,15 +112,12 @@ export const LoginPage = (props) => {
                     </Form.Item>
                     <Form.Item>
                         <Button type="primary" htmlType="submit" className="login-form-button">
-                        Log In
+                        Register
                         </Button>
                     </Form.Item>
 
                     <Form.Item>
-                        <a className="login-form-forgot" href="#" >
-                        Forgot password?
-                        </a>
-                        <Button type="link" onClick={() => setActivePage(3)}>Register now!</Button>
+                        <Button type="link" onClick={() => setActivePage(1)}>Have Account..? Log In</Button>
                     </Form.Item>
                 </Form>
                 </Card>
