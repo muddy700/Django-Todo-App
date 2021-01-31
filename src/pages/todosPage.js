@@ -22,6 +22,7 @@ export const TodosPage = (props) => {
     const [TodoForm] = Form.useForm()
     const [editingMode, setEditingMode] = useState(false)
     const [todos, setTodos] = useState(userTodos)
+    const [activeItem, setActiveItem] = useState(null)
 
 
     var headerMessage = 'Total Tasks'
@@ -171,14 +172,19 @@ export const TodosPage = (props) => {
                         <List
                           dataSource={arrayOfTodos}
                           renderItem={item => (
-                            <List.Item key={item.id} style={{textAlign: 'left'}}>
+                            <List.Item key={item.id} style={{textAlign: 'left'}} onMouseEnter={() => setActiveItem(item.id)} onMouseLeave={() => setActiveItem(null)}>
                               <List.Item.Meta
                                 title={item.title}
                                 description={item.description}
+                                className={item.status === "True" ? 'completedTask' : null}
+                                
                               />
                               {/* <div>Content</div> */}
-                              <Button onClick={() => setEditingTodo(item.id)}><EditFilled /></Button>
+                            {activeItem === item.id ? <>
+                            <Button onClick={() => setEditingTodo(item.id)}><EditFilled /></Button> 
                               <Button onClick={() => deleteSingleTodo(item.id)}><DeleteFilled /></Button>
+                              </>
+                              : null }
                             </List.Item>
                           )}>
                         </List>

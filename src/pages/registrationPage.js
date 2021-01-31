@@ -1,6 +1,6 @@
 import '../App.css';
 import { Typography, Card, Avatar, Form, Input, Layout, Button, Row, Col, message} from 'antd';
-import { UserOutlined, LockOutlined  } from '@ant-design/icons';
+import { UserOutlined, LockOutlined, MailOutlined  } from '@ant-design/icons';
 import React , { useState, useEffect } from 'react'
 import { fetchAllUsers, createUser} from '../api'
 
@@ -96,7 +96,7 @@ export const RegistrationPage = (props) => {
                         name="email"
                         rules={[{ required: true, message: 'Please input your Email!' }]}
                     >
-                        <Input prefix={<LockOutlined className="site-form-item-icon" />}
+                        <Input prefix={<MailOutlined className="site-form-item-icon" />}
                         type="email"
                         placeholder="Email"
                         />

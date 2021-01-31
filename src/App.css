@@ -16,6 +16,7 @@ code {
 
 .App {
   text-align: center;
+  /* height: 100%; */
 }
 
 .App-header {
@@ -49,6 +50,7 @@ code {
   padding-top: 3%;
   padding-bottom: 3%;
   background-color: lightgray;
+  /* height: 100%; */
 }
 
 .logo {
@@ -81,15 +83,17 @@ code {
 }
 
 .inner-card {
-  background-color: cadetblue;
+  /* background-color: cadetblue; */
   width: 100%;
 }
 .footer-tag {
-  /* position: fixed; */
-  /* bottom: 0; */
+  position: fixed;
   background-color: darkslategrey;
   height: 75px;
   text-align: center;
+  bottom: 0;
+  width: 100%;
+  /* clear: both; */
 }
 .menu-tag {
   margin-left: 15%;
@@ -106,9 +110,20 @@ code {
 }
 
 .form-card {
-  background-color: yellow;
+  /* background-color: yellow; */
 }
 
 .counting-tag {
-  background-color: yellow;
+  /* background-color: yellow; */
+}
+
+.completedTask {
+  /* font-size: larger; */
+  /* font-weight: bold; */
+  /* float: left; */
+  /* background-color: red; */
+  /* width: 80%; */
+  text-decoration-line: line-through;
+  /* text-decoration-style: double; */
+  color: red;
 }
