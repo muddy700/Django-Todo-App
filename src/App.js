@@ -5,7 +5,7 @@ import { RegistrationPage } from './pages/registrationPage'
 // import {  TodosPage} from "./pages/todosPage";
 import { message } from 'antd';
 import './App.css';
-import { fetchAllTodos} from './api'
+import { fetchUserTodos} from './api'
 
   const App = () => {
 
@@ -18,13 +18,12 @@ import { fetchAllTodos} from './api'
 
     const [currentUser, setCurrentUser] = useState(user)
     const [activePage, setActivePage] = useState(1)
-    const [todos, setTodos] = useState([])
     const [userTodos, setUserTodos] = useState([])
 
     const pullTodos = async () => {
         try {
-            const todos = await fetchAllTodos()
-            setTodos(todos)
+            const todos = await fetchUserTodos(currentUser.id)
+            setUserTodos(todos)
         } catch (err) {
             if (err && err.response.data) {
                 // error from the server
@@ -45,14 +44,7 @@ import { fetchAllTodos} from './api'
 
         pullTodos()
         
-        filterUserTodos()
-
     }, [currentUser.id])
-
-    const filterUserTodos = () => {
-      const userTasks = todos.filter((todo) => todo.owner_id === currentUser.id)
-      setUserTodos(userTasks)
-    }
 
     const login_Page = <LoginPage setCurrentUser={setCurrentUser} setActivePage={setActivePage} />
     const home_Page = <HomePage currentUser={currentUser} userTodos={userTodos} setActivePage={setActivePage} />

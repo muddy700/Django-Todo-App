@@ -11,6 +11,11 @@ export async function fetchAllUsers() {
     return response.data
 }
 
+export async function authenticateUser(name, password) {
+    const response = await baseLink.get(`users/authorization/${name}/${password}`)
+    return response
+}
+
 export async function getSingleUser(id) {
     const response = await baseLink.get(`users/${id}`)
     return response
@@ -41,8 +46,8 @@ export async function deleteMult(payloasds) {
 
 
 // For Todos
-export async function fetchAllTodos() {
-    const response = await baseLink.get("todos")
+export async function fetchUserTodos(userId) {
+    const response = await baseLink.get(`todos/user/${userId}`)
     return response.data
 }
 export async function createTodo(payload) {

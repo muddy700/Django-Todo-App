@@ -2,7 +2,7 @@ import '../App.css';
 import { Typography, Card, Avatar, Form, Input, Layout, Button, Row, Col, message} from 'antd';
 import { UserOutlined, LockOutlined  } from '@ant-design/icons';
 import React , { useState, useEffect } from 'react'
-import { fetchAllUsers} from '../api'
+import { fetchAllUsers, authenticateUser} from '../api'
 
 const { Title} = Typography
 const { Header, Content, Footer } = Layout;
@@ -10,17 +10,17 @@ const { Header, Content, Footer } = Layout;
 
 export const LoginPage = (props) => {
     const { setCurrentUser, setActivePage} = props
-    const [users, setUsers] = useState([])
 
-
-    const pullUsers = async () => {
+    const onFinish = async (values) => {
         try {
-            const users = await fetchAllUsers()
-            setUsers(users)
-        } catch (err) {
+            const response = await authenticateUser(values.uname, values.pwd)
+            setCurrentUser(response.data)
+            setActivePage(2)
+        } 
+        catch (err) {
             if (err && err.response.data) {
                 // error from the server
-                message.error('Server Error')
+                message.error('Incorrect Username Or Password!')
             } else if (err.request) {
                 // netwoerk errors
                 message.error('Network Error')
@@ -28,26 +28,6 @@ export const LoginPage = (props) => {
                 // Any other errors
                 message.error('Other Error')
             }
-            // console.log('hyo => ' + err)
-            // message.error('No Internet Connection')
-        }
-    }
-
-    useEffect(() => {
-
-        pullUsers()
-
-    }, [users.length])
-
-    const onFinish = (values) => {
-        const loggedUser = users.find((user) => user.username === values.username )
-        if (loggedUser ) {
-            setCurrentUser(loggedUser)
-            setActivePage(2)
-        }
-        else{
-            setActivePage(1)
-            message.error('Incorrect Username Or Password!')
         }
     };
 
@@ -69,14 +49,14 @@ export const LoginPage = (props) => {
                 onFinish={onFinish}
                 >
                     <Form.Item
-                        name="username"
+                        name="uname"
                         rules={[{ required: true, message: 'Please input your Username!' }]}
                         
                     >
                         <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" autoFocus/>
                     </Form.Item>
                     <Form.Item
-                        name="password"
+                        name="pwd"
                         rules={[{ required: true, message: 'Please input your Password!' }]}
                     >
                         <Input prefix={<LockOutlined className="site-form-item-icon" />}
