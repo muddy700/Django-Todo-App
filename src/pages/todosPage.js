@@ -1,4 +1,3 @@
-
 import { DeleteFilled, EditFilled } from '@ant-design/icons';import '../App.css';
 import { Typography, Card, Layout, Menu, Row, Col, List, Checkbox , Spin, message, Badge, Form, Input, Button  } from 'antd';
 import React , { useState, useEffect } from 'react'
@@ -17,21 +16,14 @@ export const TodosPage = (props) => {
     }
 
     const [viewMode, setViewMode] = useState('all')
-    const [totalTodos, setTotalTodos] = useState(0)
     const [activeTodo, setActiveTodo] = useState(initialTodo)
     const [TodoForm] = Form.useForm()
     const [editingMode, setEditingMode] = useState(false)
     const [todos, setTodos] = useState(userTodos)
     const [activeItem, setActiveItem] = useState(null)
 
-
     var headerMessage = 'Total Tasks'
     var arrayOfTodos
-    
-    
-    // const countTodos = () => {
-    //   setTotalTodos(arrayOfTodos.length)
-    // }
     
     const deleteSingleTodo = async (id) => {
         // setloading(true)
@@ -44,7 +36,6 @@ export const TodosPage = (props) => {
                 // setloading(false)
                 const newTodoList = todos.filter((todo) => todo.id !== id)
                 setTodos(newTodoList)
-                // countTodos()
               }
         }
         catch (err){
@@ -64,10 +55,6 @@ export const TodosPage = (props) => {
         })
     }
     
-    //  useEffect(() => {
-    //    countTodos()
-    //   }, [viewMode, arrayOfTodos])
-      
        const onFinish = async (values) => {
          //  setloading(true)
          if(editingMode) {   //OnEditing Existing User

@@ -1,18 +1,52 @@
 import '../App.css';
-import { Typography, Layout, Menu } from 'antd';
-import React , { useState } from 'react'
+import { Typography, Layout, Menu, message } from 'antd';
+import React , { useState, useEffect } from 'react'
 import { TodosPage } from "./todosPage";
 import {  ProfilePage } from "./profilePage";
 import {  AboutPage } from "./aboutPage";
+import { fetchUserTodos} from '../api'
+
 
 const { Title} = Typography
 const { Header, Content, Footer } = Layout;
 
 export const HomePage = (props) => {
-  const { currentUser, userTodos, setActivePage } = props
+  const { currentUser, setActivePage, userTodos2} = props
   const [activeTab, setActiveTab] = useState(1)
+  const [userTodos, setUserTodos] = useState([])
+  var todosList
+
+  const pullTodos = async () => {
+        try {
+            todosList = await fetchUserTodos(currentUser.id)
+            setUserTodos(todosList)
+        } catch (err) {
+            if (err && err.response.data) {
+                // error from the server
+                message.error('Server Error')
+            } else if (err.request) {
+                // netwoerk errors
+                message.error('Network Error')
+            } else {
+                // Any other errors
+                message.error('Other Error')
+            }
+            // console.log('hyo => ' + err)
+            // message.error('No Internet Connection')
+        }
+    }
+
+        useEffect(() => {
+
+        pullTodos()
+        
+    // }, [])
+    }, [currentUser.id])
+
+
   
-  const todos = <TodosPage currentUser={currentUser} userTodos={userTodos}/>
+  
+  const todos = <TodosPage currentUser={currentUser} userTodos={userTodos2}/>
   const about = <AboutPage />
   const profile = <ProfilePage currentUser={currentUser}/>
 
@@ -39,7 +73,7 @@ export const HomePage = (props) => {
             </Menu>
           </Header>
           <Content className="content-tag" >
-          {tabs[activeTab]}
+            {tabs[activeTab]}
           </Content>
           <Footer className="footer-tag " > <i>Created By Brungas &copy;2021.</i> </Footer>
         </Layout>

@@ -46,6 +46,10 @@ export async function deleteMult(payloasds) {
 
 
 // For Todos
+export async function fetchAllTodos() {
+    const response = await baseLink.get("todos/")
+    return response.data
+}
 export async function fetchUserTodos(userId) {
     const response = await baseLink.get(`todos/user/${userId}`)
     return response.data
