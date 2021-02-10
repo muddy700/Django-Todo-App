@@ -50,10 +50,12 @@ export async function fetchAllTodos() {
     const response = await baseLink.get("todos/")
     return response.data
 }
+
 export async function fetchUserTodos(userId) {
     const response = await baseLink.get(`todos/user/${userId}`)
     return response.data
 }
+
 export async function createTodo(payload) {
     const response = await baseLink.post("todos/", payload )
     return response
@@ -63,6 +65,13 @@ export async function deleteTodo(id) {
     const response = await baseLink.delete(`todos/${id}`)
     return response
 }
+
+export async function deleteMultpleTodos(payloasds) {
+    const requests = payloasds.map((todo) => baseLink.delete(`todos/${todo}`))
+    const responseArray = await axios.all([...requests])
+    return responseArray
+}
+
 export async function editTodo(id, payload) {
     const response = await baseLink.put(`todos/${id}`, payload )
     return response

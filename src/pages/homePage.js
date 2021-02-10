@@ -14,12 +14,14 @@ export const HomePage = (props) => {
   const { currentUser, setActivePage, userTodos2} = props
   const [activeTab, setActiveTab] = useState(1)
   const [userTodos, setUserTodos] = useState([])
-  var todosList
+  // var todosList
 
   const pullTodos = async () => {
         try {
-            todosList = await fetchUserTodos(currentUser.id)
+           const todosList = await fetchUserTodos(currentUser.id)
             setUserTodos(todosList)
+            console.log(todosList)
+            console.log(userTodos)
         } catch (err) {
             if (err && err.response.data) {
                 // error from the server

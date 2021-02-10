@@ -13,7 +13,7 @@ export const ProfilePage = (props) => {
   const [showModal, setShowModal] = useState(false)
   const [activeForm, setActiveForm] = useState(0)
 
-  const password_Form = <PasswordForm />
+  const password_Form = <PasswordForm currentUser={currentUser} />
   const profile_Form = <ProfileForm />
 
   const form = {

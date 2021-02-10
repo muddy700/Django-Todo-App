@@ -1,8 +1,9 @@
 import { DeleteFilled, EditFilled } from '@ant-design/icons';import '../App.css';
-import { Typography, Card, Layout, Menu, Row, Col, List, Checkbox , Spin, message, Badge, Form, Input, Button  } from 'antd';
+import { Typography, Card, Layout, Menu, Row, Col, List, Checkbox , Popconfirm, Spin, message, Badge, Form, Input, Button  } from 'antd';
 import React , { useState, useEffect } from 'react'
+import { LoadingOutlined } from '@ant-design/icons';
 import InfiniteScroll from 'react-infinite-scroller';
-import { deleteTodo, createTodo, editTodo } from '../api'
+import { deleteTodo, createTodo, editTodo, deleteMultpleTodos } from '../api'
 
 export const TodosPage = (props) => {
     const { currentUser, userTodos } = props
@@ -21,12 +22,18 @@ export const TodosPage = (props) => {
     const [editingMode, setEditingMode] = useState(false)
     const [todos, setTodos] = useState(userTodos)
     const [activeItem, setActiveItem] = useState(null)
+    const [addingLoader, setAddingLoader] = useState(false)
+    const [deletingLoader, setDeletingLoader] = useState(false)
+    const [selectedTodos, setSelectedTodos] = useState([])
 
+
+    const antIcon = <LoadingOutlined style={{ fontSize: 30 }} spin />
+    const spinner = <Spin indicator={antIcon} tip="Please Wait!." />
     var headerMessage = 'Total Tasks'
     var arrayOfTodos
     
     const deleteSingleTodo = async (id) => {
-        // setloading(true)
+        setDeletingLoader(true)
         try{
             let res = await deleteTodo(id)
             
@@ -34,6 +41,7 @@ export const TodosPage = (props) => {
                 message.success('One Todo Deletd Successfull.....!!!!')
                 console.log(res)
                 // setloading(false)
+                setDeletingLoader(false)
                 const newTodoList = todos.filter((todo) => todo.id !== id)
                 setTodos(newTodoList)
               }
@@ -44,7 +52,27 @@ export const TodosPage = (props) => {
 
       }
     
+    const deleteMultiTodos = async () => {
+      setDeletingLoader(true)
+      try {
+          let res = await deleteMultpleTodos(selectedTodos)
+
+          if (res[selectedTodos.length - 1].status === 200) {
+              const remainingTodos = todos.filter((todo) => !selectedTodos.includes(todo.id))
+              setTodos(remainingTodos)
+              const deleted = selectedTodos.length
+              message.success(deleted + ' Todos Deleted')
+              setSelectedTodos([])
+              setDeletingLoader(false)
+          }
+      } catch (error) {
+          message.error('Some Error Occured')
+
+      }
+    }
+
     const setEditingTodo = (id) => {
+      console.log(userTodos)
         message.success('Id To Edit Is '+ id)
         setEditingMode(true)
         const selectedTodo = todos.find((todo) => todo.id === id)
@@ -56,7 +84,7 @@ export const TodosPage = (props) => {
     }
     
        const onFinish = async (values) => {
-         //  setloading(true)
+         setAddingLoader(true)
          if(editingMode) {   //OnEditing Existing User
           // const {date_created , id ,  ...rest} = activeTodo  //Remove Extra Data
           
@@ -69,10 +97,10 @@ export const TodosPage = (props) => {
             TodoForm.resetFields()
             setEditingMode(false)
             setActiveTodo(initialTodo)
-          //   setloading(false)
+            setAddingLoader(false)
             const newTodoList = todos.map((todo) => todo.id === activeTodo.id ? editedTodo : todo)
             setTodos(newTodoList)
-            }
+          }
         } catch (error) {
           console.log(error)
         }
@@ -89,7 +117,7 @@ export const TodosPage = (props) => {
             // console.log(addedTodo)
             setTodos([...todos, addedTodo])
             TodoForm.resetFields()
-            // setloading(false)
+            setAddingLoader(false)
           }
         } catch (error) {
           if(error && error.response.data)
@@ -114,13 +142,24 @@ export const TodosPage = (props) => {
         headerMessage = 'Pending Tasks'
       }
     
+      const handleSelectedTodos = (todoId) => {
+        const isSelected = selectedTodos.find((todo) => todo === todoId)
+        if(isSelected){
+          const newSelectedList = selectedTodos.filter((todo) => todo !== todoId)
+          setSelectedTodos(newSelectedList)
+        }
+        else{
+          setSelectedTodos([...selectedTodos, todoId])
+        }
+      }
+
       return (
        <Card className="outer-card">
-              
               <Row>
                 <Col xs={{offset: 0, span:24}} sm={4} md={4} lg={4} xl={{offset: 6, span: 12}}>
                   <Card className="inner-card" title = "Add, Edit Or Delete Todo">
-                      <Card className="form-card" loading={false}>
+                      <Card className="form-card" >
+                      {addingLoader ? spinner : 
                         <Form
                           name="normal_login"
                           className="todo-form"
@@ -143,7 +182,7 @@ export const TodosPage = (props) => {
                             </Col>
                             <Col xs={24} sm={4} md={4} lg={4} xl={3}>
                               <Form.Item>
-                                <Button type="primary" htmlType="submit" className="login-form-button">
+                                <Button type="primary" htmlType="submit" className="login-form-button" loading={addingLoader}>
                                 {editingMode? 'Save' : 'Add'}
                                 </Button>
                               </Form.Item>
@@ -152,7 +191,7 @@ export const TodosPage = (props) => {
                           <Badge.Ribbon text={arrayOfTodos.length}>
                             <Button>{headerMessage}</Button> 
                           </Badge.Ribbon>
-                       </Form>
+                       </Form> }
                       </Card>
                     <div className="demo-infinite-container">
                       <InfiniteScroll>
@@ -164,14 +203,16 @@ export const TodosPage = (props) => {
                                 title={item.title}
                                 description={item.description}
                                 className={item.status === "True" ? 'completedTask' : null}
-                                
                               />
                               {/* <div>Content</div> */}
                             {activeItem === item.id ? <>
                             <Button onClick={() => setEditingTodo(item.id)}><EditFilled /></Button> 
-                              <Button onClick={() => deleteSingleTodo(item.id)}><DeleteFilled /></Button>
+                            <Popconfirm title="Sure to delete?" onConfirm={() => deleteSingleTodo(item.id)}>
+                              <Button type="danger" loading={deletingLoader}> <DeleteFilled /> </Button>
+                            </Popconfirm>
                               </>
                               : null }
+                              <Checkbox onClick={() => handleSelectedTodos(item.id)}/>
                             </List.Item>
                           )}>
                         </List>
@@ -181,7 +222,8 @@ export const TodosPage = (props) => {
                         <Button onClick={() => setViewMode('all')}>All</Button>
                         <Button onClick={() => setViewMode('pending')}>Pending</Button>
                         <Button onClick={() => setViewMode('completed')}>Completed</Button>
-                        <Button>Clear Completed</Button>
+                        <Button onClick={() => deleteMultiTodos()} loading={deletingLoader} disabled={selectedTodos.length > 0 ? false : true}>Clear Completed</Button>
+                        <Button disabled={true}>{selectedTodos.length} Selected</Button>
                       </Card>
                   </Card>
                 </Col>

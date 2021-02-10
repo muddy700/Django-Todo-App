@@ -4,6 +4,7 @@ import React from 'react'
 
 export const PasswordForm = (props) => {
 
+    const { currentUser } = props
     const onFinish = async (activeUser) => {
     
     }
@@ -21,7 +22,9 @@ export const PasswordForm = (props) => {
                 >
                     <Form.Item
                         name="oldPassword"
-                        rules={[{ required: true, message: 'Please Input your Password!' }]}
+                        rules={[{ required: true, message: 'Please Input your Password!' } , 
+                        () => ({ validator(rule, value) { if ( !value || value === currentUser.password ) { return Promise.resolve(); }
+                        return Promise.reject('Wrong Password!'); }, }) ]} hasFeedback
                     >
                         <Input prefix={<LockOutlined className="site-form-item-icon" />}
                         type="password"
@@ -39,8 +42,10 @@ export const PasswordForm = (props) => {
                         />
                     </Form.Item>
                     <Form.Item
-                        name="password"
-                        rules={[{ required: true, message: 'Please Input your Password!' }]}
+                        name="repeatPassword"
+                        rules={[{ required: true, message: 'Please Input your Password!' } , 
+                        ({ getFieldValue }) => ({ validator(rule, value) { if (!value || getFieldValue('newPassword') === value) { return Promise.resolve(); }
+                        return Promise.reject('Passwords Did Not Match!'); }, }),]} dependencies={['newPass']} hasFeedback 
                     >
                         <Input prefix={<LockOutlined className="site-form-item-icon" />}
                         type="password"
