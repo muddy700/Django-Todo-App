@@ -1,4 +1,5 @@
-import { DeleteFilled, EditFilled } from '@ant-design/icons';import '../App.css';
+import { DeleteFilled, EditFilled } from '@ant-design/icons';
+import '../App.css';
 import { Typography, Card, Layout, Menu, Row, Col, List, Checkbox , Popconfirm, Spin, message, Badge, Form, Input, Button  } from 'antd';
 import React , { useState, useEffect } from 'react'
 import { LoadingOutlined } from '@ant-design/icons';
@@ -15,6 +16,7 @@ export const TodosPage = (props) => {
         owner_id: '',
         status: ''
     }
+    const completedTodos = userTodos.filter((todo) => todo.status === "True"  ? todo.id : null)
 
     const [viewMode, setViewMode] = useState('all')
     const [activeTodo, setActiveTodo] = useState(initialTodo)
@@ -24,7 +26,7 @@ export const TodosPage = (props) => {
     const [activeItem, setActiveItem] = useState(null)
     const [addingLoader, setAddingLoader] = useState(false)
     const [deletingLoader, setDeletingLoader] = useState(false)
-    const [selectedTodos, setSelectedTodos] = useState([])
+    const [selectedTodos, setSelectedTodos] = useState([completedTodos])
 
 
     const antIcon = <LoadingOutlined style={{ fontSize: 30 }} spin />
@@ -40,6 +42,8 @@ export const TodosPage = (props) => {
             if(res.status === 200){
                 message.success('One Todo Deletd Successfull.....!!!!')
                 console.log(res)
+      console.log(currentUser)
+
                 // setloading(false)
                 setDeletingLoader(false)
                 const newTodoList = todos.filter((todo) => todo.id !== id)
@@ -143,12 +147,33 @@ export const TodosPage = (props) => {
       }
     
       const handleSelectedTodos = (todoId) => {
+        console.log(selectedTodos)
         const isSelected = selectedTodos.find((todo) => todo === todoId)
         if(isSelected){
           const newSelectedList = selectedTodos.filter((todo) => todo !== todoId)
+          const newTodoList = todos.map((todo) => {
+            if(todo.id === todoId){
+              return {...todo, status: "False"}
+  
+            }
+            else{
+              return todo
+            }
+          })
+          setTodos(newTodoList)
           setSelectedTodos(newSelectedList)
         }
         else{
+          const newTodoList = todos.map((todo) => {
+            if(todo.id === todoId){
+              return {...todo, status: "True"}
+
+            }
+            else{
+              return todo
+            }
+          })
+          setTodos(newTodoList)
           setSelectedTodos([...selectedTodos, todoId])
         }
       }
@@ -189,7 +214,7 @@ export const TodosPage = (props) => {
                             </Col>
                           </Row> 
                           <Badge.Ribbon text={arrayOfTodos.length}>
-                            <Button>{headerMessage}</Button> 
+                            <Button type="primary">{headerMessage}</Button> 
                           </Badge.Ribbon>
                        </Form> }
                       </Card>
@@ -199,6 +224,7 @@ export const TodosPage = (props) => {
                           dataSource={arrayOfTodos}
                           renderItem={item => (
                             <List.Item key={item.id} style={{textAlign: 'left'}} onMouseEnter={() => setActiveItem(item.id)} onMouseLeave={() => setActiveItem(null)}>
+                              <Checkbox onClick={() => handleSelectedTodos(item.id)} style={{paddingRight : 20}} checked={item.status === "True" ? true : false }/>
                               <List.Item.Meta
                                 title={item.title}
                                 description={item.description}
@@ -212,18 +238,17 @@ export const TodosPage = (props) => {
                             </Popconfirm>
                               </>
                               : null }
-                              <Checkbox onClick={() => handleSelectedTodos(item.id)}/>
                             </List.Item>
                           )}>
                         </List>
                       </InfiniteScroll>
                     </div>
                       <Card className="counting-tag">
-                        <Button onClick={() => setViewMode('all')}>All</Button>
+                        <Button type="primary" onClick={() => setViewMode('all')}>All</Button>
                         <Button onClick={() => setViewMode('pending')}>Pending</Button>
-                        <Button onClick={() => setViewMode('completed')}>Completed</Button>
+                        <Button type="primary" onClick={() => setViewMode('completed')}>Completed</Button>
                         <Button onClick={() => deleteMultiTodos()} loading={deletingLoader} disabled={selectedTodos.length > 0 ? false : true}>Clear Completed</Button>
-                        <Button disabled={true}>{selectedTodos.length} Selected</Button>
+                        <Button type="primary" disabled={false} >{selectedTodos.length} Selected</Button>
                       </Card>
                   </Card>
                 </Col>

@@ -9,11 +9,11 @@ const { Header, Content, Footer } = Layout;
 
 export const ProfilePage = (props) => {
 
-  const { currentUser, } = props
+  const { currentUser, userProfile} = props
   const [showModal, setShowModal] = useState(false)
   const [activeForm, setActiveForm] = useState(0)
 
-  const password_Form = <PasswordForm currentUser={currentUser} />
+  const password_Form = <PasswordForm currentUser={currentUser} setShowModal={setShowModal} />
   const profile_Form = <ProfileForm />
 
   const form = {
@@ -42,36 +42,37 @@ export const ProfilePage = (props) => {
         </Modal>
         <Row>
             <Col xs={{offset: 0, span:24}} sm={4} md={4} lg={4} xl={{offset: 8, span: 8}}>
-            <Card style={{width: '100%'}} bordered={false}
+            <Card style={{width: '100%', marginBottom: '15%'}} bordered={false}
                     title = "Profile Informations" >
                 <Avatar size={200} icon={<UserOutlined />} style={{marginBottom: '5%'}}/>
                 <Card style={{width: '100%', textAlign: 'left'}} headStyle={{color:'red'}}>
                     <Row>
-                        <Col span={6}>
+                        <Col span={8}>
                             <Title level={4}>Name : </Title>
                         </Col>
-                        <Col span={18}>
+                        <Col span={16}>
                             <Title level={4}> {currentUser.username} </Title>
                         </Col>
                     </Row>
-                    <Row hidden={currentUser.phone ? false : true}>
-                        <Col span={6}>
+                    {/* <Row > */}
+                    <Row hidden={userProfile.phone ? false : true}>
+                        <Col span={8}>
                             <Title level={4}>Phone : </Title>
                         </Col>
-                        <Col span={18}>
-                            <Title level={4}> {currentUser.phone} </Title>
+                        <Col span={16}>
+                            <Title level={4}> {userProfile.phone} </Title>
                         </Col>
                     </Row>
                     <Row hidden={currentUser.email ? false : true}>
-                        <Col span={6}>
+                        <Col span={8}>
                             <Title level={4}>Email : </Title>
                         </Col>
-                        <Col span={18}>
+                        <Col span={16}>
                             <Title level={4}> {currentUser.email} </Title>
                         </Col>
                     </Row>
                 </Card>
-                <Row style={{paddingTop: '2%'}}>
+                <Row style={{paddingTop: '5%'}}>
                     <Col span={12}>
                         <Button type="primary" onClick={() => handleFormDisplay(2)}>Edit Profile</Button>
                     </Col>

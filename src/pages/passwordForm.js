@@ -1,11 +1,35 @@
-import { Typography, Card, Avatar, Form, Input, Layout, Button, Row, Col, message} from 'antd';
+import { Typography, Card, Avatar, Form, Input, Layout, Spin, Button, Row, Col, message} from 'antd';
 import { UserOutlined, LockOutlined  } from '@ant-design/icons';
-import React from 'react'
+import React , { useState, useEffect } from 'react'
+import { editUser } from '../api'
+import { LoadingOutlined } from '@ant-design/icons';
 
 export const PasswordForm = (props) => {
 
-    const { currentUser } = props
-    const onFinish = async (activeUser) => {
+    const { currentUser, setShowModal } = props
+    const [PasswordForm] = Form.useForm()
+    const [passwordLoader, setPasswordLoader] = useState(false)
+
+    const antIcon = <LoadingOutlined style={{ fontSize: 30 }} spin />
+    const spinner = <Spin indicator={antIcon} tip="Please Wait!." />
+
+    const onFinish = async (newValues) => {
+        setPasswordLoader(true)
+        const {password, id, ...restData } = currentUser
+        const newUser = {...restData, password: newValues.password}
+          try {
+              console.log(newUser)
+              console.log(id)
+            const response = await editUser(id, newUser)
+            if(response.status === 200){
+            message.success('Password Changed Successfull')
+            PasswordForm.resetFields()
+            setPasswordLoader(false)
+            setShowModal(false)
+        }
+        } catch (error) {
+          console.log(error)
+        }
     
     }
 
@@ -14,11 +38,13 @@ export const PasswordForm = (props) => {
                     // title="Account Informations"
                     style={{width: '100%'}}
                     headStyle={{color:'red'}}>
+                    {passwordLoader ? spinner : 
                 <Form
                 name="normal_login"
                 className="login-form"
                 initialValues={{ remember: true }}
                 onFinish={onFinish}
+                form={PasswordForm}
                 >
                     <Form.Item
                         name="oldPassword"
@@ -42,7 +68,7 @@ export const PasswordForm = (props) => {
                         />
                     </Form.Item>
                     <Form.Item
-                        name="repeatPassword"
+                        name = "password"
                         rules={[{ required: true, message: 'Please Input your Password!' } , 
                         ({ getFieldValue }) => ({ validator(rule, value) { if (!value || getFieldValue('newPassword') === value) { return Promise.resolve(); }
                         return Promise.reject('Passwords Did Not Match!'); }, }),]} dependencies={['newPass']} hasFeedback 
@@ -61,7 +87,7 @@ export const PasswordForm = (props) => {
                     {/* <Form.Item>
                         <Button type="link" onClick={() => setActivePage(1)}>Have Account..? Log In</Button>
                     </Form.Item> */}
-                </Form>
+                </Form>  }
                 </Card>
         
      )

@@ -4,7 +4,7 @@ import React , { useState, useEffect } from 'react'
 import { TodosPage } from "./todosPage";
 import {  ProfilePage } from "./profilePage";
 import {  AboutPage } from "./aboutPage";
-import { fetchUserTodos} from '../api'
+import { fetchUserTodos, getUserProfile} from '../api'
 
 
 const { Title} = Typography
@@ -14,6 +14,7 @@ export const HomePage = (props) => {
   const { currentUser, setActivePage, userTodos2} = props
   const [activeTab, setActiveTab] = useState(1)
   const [userTodos, setUserTodos] = useState([])
+  const [userProfile, setUserProfile] = useState({})
   // var todosList
 
   const pullTodos = async () => {
@@ -38,9 +39,31 @@ export const HomePage = (props) => {
         }
     }
 
+  const getProfile = async () => {
+        try {
+           const profile = await getUserProfile(currentUser.id)
+            setUserProfile(profile.data)
+            console.log(profile.data)
+        } catch (err) {
+            if (err && err.response.data) {
+                // error from the server
+                message.error('Server Error')
+            } else if (err.request) {
+                // netwoerk errors
+                message.error('Network Error')
+            } else {
+                // Any other errors
+                message.error('Other Error')
+            }
+            // console.log('hyo => ' + err)
+            // message.error('No Internet Connection')
+        }
+    }
+
         useEffect(() => {
 
         pullTodos()
+        getProfile()
         
     // }, [])
     }, [currentUser.id])
@@ -50,7 +73,7 @@ export const HomePage = (props) => {
   
   const todos = <TodosPage currentUser={currentUser} userTodos={userTodos2}/>
   const about = <AboutPage />
-  const profile = <ProfilePage currentUser={currentUser}/>
+  const profile = <ProfilePage currentUser={currentUser} userProfile={userProfile} />
 
     const changeContent = (menu) => {
       setActiveTab(menu.key)

@@ -119,10 +119,11 @@ code {
 
 .completedTask {
   /* font-size: larger; */
-  /* font-weight: bold; */
-  /* float: left; */
+  font-weight: bold;
+
   /* background-color: red; */
   /* width: 80%; */
+  /* font-size: x-large; */
   text-decoration-line: line-through;
   /* text-decoration-style: double; */
   color: red;
