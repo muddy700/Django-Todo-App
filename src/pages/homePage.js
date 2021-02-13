@@ -21,8 +21,8 @@ export const HomePage = (props) => {
         try {
            const todosList = await fetchUserTodos(currentUser.id)
             setUserTodos(todosList)
-            console.log(todosList)
-            console.log(userTodos)
+            // console.log(todosList)
+            // console.log(userTodos)
         } catch (err) {
             if (err && err.response.data) {
                 // error from the server
@@ -43,7 +43,7 @@ export const HomePage = (props) => {
         try {
            const profile = await getUserProfile(currentUser.id)
             setUserProfile(profile.data)
-            console.log(profile.data)
+            // console.log(profile.data)
         } catch (err) {
             if (err && err.response.data) {
                 // error from the server

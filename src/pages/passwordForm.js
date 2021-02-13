@@ -18,7 +18,7 @@ export const PasswordForm = (props) => {
         const {password, id, ...restData } = currentUser
         const newUser = {...restData, password: newValues.password}
           try {
-              console.log(newUser)
+            //   console.log(newUser)
               console.log(id)
             const response = await editUser(id, newUser)
             if(response.status === 200){

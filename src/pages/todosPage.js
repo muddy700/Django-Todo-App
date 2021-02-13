@@ -1,6 +1,6 @@
 import { DeleteFilled, EditFilled } from '@ant-design/icons';
 import '../App.css';
-import { Typography, Card, Layout, Menu, Row, Col, List, Checkbox , Popconfirm, Spin, message, Badge, Form, Input, Button  } from 'antd';
+import { Card, Row, Col, List, Checkbox , Popconfirm, Spin, message, Badge, Form, Input, Button  } from 'antd';
 import React , { useState, useEffect } from 'react'
 import { LoadingOutlined } from '@ant-design/icons';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -49,8 +49,8 @@ export const TodosPage = (props) => {
             
             if(res.status === 200){
                 message.success('One Todo Deletd Successfull.....!!!!')
-                console.log(res)
-      console.log(currentUser)
+                // console.log(res)
+      // console.log(currentUser)
 
                 // setloading(false)
                 setDeletingLoader(false)
@@ -85,8 +85,8 @@ export const TodosPage = (props) => {
     }
 
     const setEditingTodo = (id) => {
-      console.log(userTodos)
-        message.success('Id To Edit Is '+ id)
+      // console.log(userTodos)
+        // message.success('Id To Edit Is '+ id)
         setEditingMode(true)
         const selectedTodo = todos.find((todo) => todo.id === id)
         setActiveTodo(selectedTodo)
@@ -156,7 +156,7 @@ export const TodosPage = (props) => {
       }
     
       const handleSelectedTodos = (todoId) => {
-        console.log(selectedTodos)
+        // console.log(selectedTodos)
         const isSelected = selectedTodos.find((todo) => todo.id === todoId)
         if(isSelected){
           const newSelectedList = selectedTodos.filter((todo) => todo.id !== todoId)
