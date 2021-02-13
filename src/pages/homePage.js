@@ -4,7 +4,9 @@ import React , { useState, useEffect } from 'react'
 import { TodosPage } from "./todosPage";
 import {  ProfilePage } from "./profilePage";
 import {  AboutPage } from "./aboutPage";
-import { fetchUserTodos, getUserProfile} from '../api'
+import { 
+  // fetchUserTodos,
+   getUserProfile} from '../api'
 
 
 const { Title} = Typography
@@ -13,31 +15,31 @@ const { Header, Content, Footer } = Layout;
 export const HomePage = (props) => {
   const { currentUser, setActivePage, userTodos2} = props
   const [activeTab, setActiveTab] = useState(1)
-  const [userTodos, setUserTodos] = useState([])
+  // const [userTodos, setUserTodos] = useState([])
   const [userProfile, setUserProfile] = useState({})
   // var todosList
 
-  const pullTodos = async () => {
-        try {
-           const todosList = await fetchUserTodos(currentUser.id)
-            setUserTodos(todosList)
-            // console.log(todosList)
-            // console.log(userTodos)
-        } catch (err) {
-            if (err && err.response.data) {
-                // error from the server
-                message.error('Server Error')
-            } else if (err.request) {
-                // netwoerk errors
-                message.error('Network Error')
-            } else {
-                // Any other errors
-                message.error('Other Error')
-            }
-            // console.log('hyo => ' + err)
-            // message.error('No Internet Connection')
-        }
-    }
+  // const pullTodos = async () => {
+  //       try {
+  //          const todosList = await fetchUserTodos(currentUser.id)
+  //           setUserTodos(todosList)
+  //           // console.log(todosList)
+  //           // console.log(userTodos)   
+  //       } catch (err) {
+  //           if (err && err.response.data) {
+  //               // error from the server
+  //               message.error('Server Error')
+  //           } else if (err.request) {
+  //               // netwoerk errors
+  //               message.error('Network Error')
+  //           } else {
+  //               // Any other errors
+  //               message.error('Other Error')
+  //           }
+  //           // console.log('hyo => ' + err)
+  //           // message.error('No Internet Connection')
+  //       }
+  //   }
 
   const getProfile = async () => {
         try {
@@ -62,7 +64,7 @@ export const HomePage = (props) => {
 
         useEffect(() => {
 
-        pullTodos()
+        // pullTodos()
         getProfile()
         
     // }, [])

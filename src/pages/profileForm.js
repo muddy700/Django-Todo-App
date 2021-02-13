@@ -1,17 +1,17 @@
 import { Card, Form, Input, Upload, Button} from 'antd';
 import { MailOutlined, PhoneOutlined  } from '@ant-design/icons';
-import React , { useState } from 'react'
+import React from 'react'
 
 export const ProfileForm = (props) => {
 
-    const initialImage = {
-            uid: '1',
-            name: 'image.png',
-            status: 'done',
-            url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    }
+    // const initialImage = {
+    //         uid: '1',
+    //         name: 'image.png',
+    //         status: 'done',
+    //         url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    // }
 
-    const [currentImage, setcurrentImage] = useState(initialImage)
+    // const [currentImage, setcurrentImage] = useState(initialImage)
     const onFinish = async (activeUser) => {
     
     }

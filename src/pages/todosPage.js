@@ -97,6 +97,10 @@ export const TodosPage = (props) => {
     }
     
        const onFinish = async (values) => {
+         if(!values.description){
+           values.description = values.title
+         }
+         
          setAddingLoader(true)
          if(editingMode) {   //OnEditing Existing User
           // const {date_created , id ,  ...rest} = activeTodo  //Remove Extra Data
@@ -134,7 +138,8 @@ export const TodosPage = (props) => {
           }
         } catch (error) {
           if(error && error.response.data)
-           alert(JSON.stringify(error.response.data))
+          //  alert(JSON.stringify(error.response.data))
+                message.error("Something Went Wrong!")
         }
       }
 

@@ -1,30 +1,41 @@
 import '../App.css';
-import { Card, Avatar, Form, Input, Layout, Button, Row, Col, message} from 'antd';
+import { Card, Avatar, Form, Input, Layout, Button, Row, Col, Spin, message} from 'antd';
 import { UserOutlined, LockOutlined  } from '@ant-design/icons';
-import React from 'react'
+import React , { useState, } from 'react'
 import { authenticateUser} from '../api'
+import { LoadingOutlined } from '@ant-design/icons';
 
 const { Footer } = Layout;
 
 export const LoginPage = (props) => {
     const { setCurrentUser, setActivePage} = props
+    const [loginLoader, setLoginLoader] = useState(false)
+    
+    const antIcon = <LoadingOutlined style={{ fontSize: 30 }} spin />
+    const spinner = <Spin indicator={antIcon} tip="Please Wait!." />
+
 
     const onFinish = async (values) => {
+        setLoginLoader(true)
         try {
             const response = await authenticateUser(values.uname, values.pwd)
             setCurrentUser(response.data)
+            setLoginLoader(false)
             setActivePage(2)
         } 
         catch (err) {
             if (err && err.response.data) {
                 // error from the server
                 message.error('Incorrect Username Or Password!')
+                setLoginLoader(false)
             } else if (err.request) {
                 // netwoerk errors
+                setLoginLoader(false)
                 message.error('Network Error')
             } else {
                 // Any other errors
                 message.error('Other Error')
+                setLoginLoader(false)
             }
         }
     };
@@ -40,6 +51,7 @@ export const LoginPage = (props) => {
                     title="My Todo List"
                     style={{width: '100%'}}
                     headStyle={{color:'red'}}>
+                {loginLoader ? spinner : 
                 <Form
                 name="normal_login"
                 className="login-form"
@@ -69,12 +81,12 @@ export const LoginPage = (props) => {
                     </Form.Item>
 
                     <Form.Item>
-                        <a className="login-form-forgot" href="#" >
-                        Forgot password?
-                        </a>
+                        {/* <a className="login-form-forgot" href="#" > */}
+                        <Button type="link"> Forgot password? </Button>
+                        {/* </a> */}
                         <Button type="link" onClick={() => setActivePage(3)}>Register now!</Button>
                     </Form.Item>
-                </Form>
+                </Form> }
                 </Card>
 
             </Card>

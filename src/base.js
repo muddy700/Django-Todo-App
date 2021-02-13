@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const token = 'code'
+// const token = 'code'
 
 export default axios.create({
     baseURL: '/api/v1/',

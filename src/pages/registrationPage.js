@@ -1,8 +1,10 @@
 import '../App.css';
-import { Card, Avatar, Form, Input, Layout, Button, Row, Col, message} from 'antd';
+import { Card, Avatar, Form, Input, Layout, Button, Row, Col, Spin, message} from 'antd';
 import { UserOutlined, LockOutlined, MailOutlined  } from '@ant-design/icons';
 import React , { useState, useEffect } from 'react'
 import { fetchAllUsers, createUser} from '../api'
+import { LoadingOutlined } from '@ant-design/icons';
+
 
 const { Footer } = Layout;
 
@@ -10,7 +12,10 @@ const { Footer } = Layout;
 export const RegistrationPage = (props) => {
     const { setActivePage} = props
     const [users, setUsers] = useState([])
+    const [registrationLoader, setRegistrationLoader] = useState(false)
 
+    const antIcon = <LoadingOutlined style={{ fontSize: 30 }} spin />
+    const spinner = <Spin indicator={antIcon} tip="Please Wait!." />
 
     const pullUsers = async () => {
         try {
@@ -39,30 +44,33 @@ export const RegistrationPage = (props) => {
     }, [users.length])
 
     const onFinish = async (values) => {
+        setRegistrationLoader(true)
         const isPresent = users.find((user) => user.username === values.username)
         // const loggedUser = users.find((user) => user.username === values.username )
         if (isPresent) {
             message.error('Username Already Exist.')
+            setRegistrationLoader(false)
         }
         else{
-
-             try {
-          const response = await createUser(values)
-          if(response.status === 200){
-            message.success('Account Created Successful.')
-            // console.log(newTodo)
-            // console.log(response)
-            // const addedTodo = {...newTodo, id : response.data.id}
-            // console.log(addedTodo)
-            // setTodos([...todos, addedTodo])
-            // TodoForm.resetFields()
-            setActivePage(1)
-            // setloading(false)
-          }
-        } 
-        catch (error) {
-          if(error && error.response.data)
-           alert(JSON.stringify(error.response.data))
+            
+            try {
+                const response = await createUser(values)
+                if(response.status === 200){
+                    message.success('Account Created Successful.')
+                    setRegistrationLoader(false)
+                    // TodoForm.resetFields()
+                    setActivePage(1)
+                }
+                else{
+                    setRegistrationLoader(false)
+                    message.error("Error Occured")
+                }
+            } 
+            catch (error) {
+                if(error && error.response.data)
+                // alert(JSON.stringify(error.response.data))
+                message.error("Some Error Occured")
+                setRegistrationLoader(false)
         }
             }
     };
@@ -78,6 +86,7 @@ export const RegistrationPage = (props) => {
                     title="Account Informations"
                     style={{width: '100%'}}
                     headStyle={{color:'red'}}>
+                {registrationLoader ? spinner : 
                 <Form
                 name="normal_login"
                 className="login-form"
@@ -118,7 +127,7 @@ export const RegistrationPage = (props) => {
                     <Form.Item>
                         <Button type="link" onClick={() => setActivePage(1)}>Have Account..? Log In</Button>
                     </Form.Item>
-                </Form>
+                </Form> }
                 </Card>
 
             </Card>
