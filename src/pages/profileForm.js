@@ -1,6 +1,6 @@
-import { Typography, Card, Avatar, Form, Input, Upload, Layout, Button, Row, Col, message} from 'antd';
-import { UserOutlined, LockOutlined, PlusOutlined, MailOutlined, PhoneOutlined  } from '@ant-design/icons';
-import React , { useState, useEffect } from 'react'
+import { Card, Form, Input, Upload, Button} from 'antd';
+import { MailOutlined, PhoneOutlined  } from '@ant-design/icons';
+import React , { useState } from 'react'
 
 export const ProfileForm = (props) => {
 

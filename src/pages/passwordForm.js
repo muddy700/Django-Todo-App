@@ -1,6 +1,6 @@
-import { Typography, Card, Avatar, Form, Input, Layout, Spin, Button, Row, Col, message} from 'antd';
-import { UserOutlined, LockOutlined  } from '@ant-design/icons';
-import React , { useState, useEffect } from 'react'
+import { Card,  Form, Input, Spin, Button, message} from 'antd';
+import { LockOutlined  } from '@ant-design/icons';
+import React , { useState } from 'react'
 import { editUser } from '../api'
 import { LoadingOutlined } from '@ant-design/icons';
 

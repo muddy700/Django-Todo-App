@@ -29,25 +29,25 @@ export async function getUserProfile(owner_id) {
 }
 
 export async function createUser(payload) {
-    const response = await baseLink.post("users/", payload )
+    const response = await baseLink.post("users/create/", payload )
     return response
 }
 
-export async function deleteUser(id) {
-    const response = await baseLink.delete(`users/${id}`)
-    return response
-}
+// export async function deleteUser(id) {
+//     const response = await baseLink.delete(`users/delete/${id}`)
+//     return response
+// }
 
 export async function editUser(id, payload) {
-    const response = await baseLink.put(`users/${id}`, payload)
+    const response = await baseLink.put(`users/update/${id}`, payload)
     return response
 }
 
-export async function deleteMult(payloads) {
-    const requests = payloads.map((item) => baseLink.delete(`users/${item}`))
-    const responseArray = await axios.all([...requests])
-    return responseArray
-}
+// export async function deleteMult(payloads) {
+//     const requests = payloads.map((item) => baseLink.delete(`users/delete/${item}`))
+//     const responseArray = await axios.all([...requests])
+//     return responseArray
+// }
 
 
 // For Todos
@@ -62,22 +62,22 @@ export async function fetchUserTodos(userId) {
 }
 
 export async function createTodo(payload) {
-    const response = await baseLink.post("todos/", payload )
+    const response = await baseLink.post("todos/create/", payload )
     return response
 }
 
 export async function deleteTodo(id) {
-    const response = await baseLink.delete(`todos/${id}`)
+    const response = await baseLink.delete(`todos/delete/${id}`)
     return response
 }
 
 export async function deleteMultpleTodos(payloasds) {
-    const requests = payloasds.map((todo) => baseLink.delete(`todos/${todo}`))
+    const requests = payloasds.map((todo) => baseLink.delete(`todos/delete/${todo}`))
     const responseArray = await axios.all([...requests])
     return responseArray
 }
 
 export async function editTodo(id, payload) {
-    const response = await baseLink.put(`todos/${id}`, payload )
+    const response = await baseLink.put(`todos/update/${id}`, payload )
     return response
 }

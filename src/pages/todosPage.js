@@ -16,8 +16,7 @@ export const TodosPage = (props) => {
         owner_id: '',
         status: ''
     }
-    const completedTodos = userTodos.filter((todo) => todo.status === "True"  ? todo.id : null)
-
+    
     const [viewMode, setViewMode] = useState('all')
     const [activeTodo, setActiveTodo] = useState(initialTodo)
     const [TodoForm] = Form.useForm()
@@ -26,14 +25,23 @@ export const TodosPage = (props) => {
     const [activeItem, setActiveItem] = useState(null)
     const [addingLoader, setAddingLoader] = useState(false)
     const [deletingLoader, setDeletingLoader] = useState(false)
-    const [selectedTodos, setSelectedTodos] = useState([completedTodos])
-
+    const [selectedTodos, setSelectedTodos] = useState([])
+    
 
     const antIcon = <LoadingOutlined style={{ fontSize: 30 }} spin />
     const spinner = <Spin indicator={antIcon} tip="Please Wait!." />
     var headerMessage = 'Total Tasks'
     var arrayOfTodos
     
+    const catchCompletedTodo = () => {
+      const completedTodos = todos.filter((todo) => todo.status === "True" )
+      setSelectedTodos(completedTodos)
+    }
+
+    useEffect(() => {
+     catchCompletedTodo()
+    }, [userTodos.length])
+
     const deleteSingleTodo = async (id) => {
         setDeletingLoader(true)
         try{
@@ -59,10 +67,11 @@ export const TodosPage = (props) => {
     const deleteMultiTodos = async () => {
       setDeletingLoader(true)
       try {
-          let res = await deleteMultpleTodos(selectedTodos)
+        const todoIds = selectedTodos.map(todo =>  todo.id)
+          let res = await deleteMultpleTodos(todoIds)
 
           if (res[selectedTodos.length - 1].status === 200) {
-              const remainingTodos = todos.filter((todo) => !selectedTodos.includes(todo.id))
+              const remainingTodos = todos.filter((todo) => !todoIds.includes(todo.id))
               setTodos(remainingTodos)
               const deleted = selectedTodos.length
               message.success(deleted + ' Todos Deleted')
@@ -148,9 +157,9 @@ export const TodosPage = (props) => {
     
       const handleSelectedTodos = (todoId) => {
         console.log(selectedTodos)
-        const isSelected = selectedTodos.find((todo) => todo === todoId)
+        const isSelected = selectedTodos.find((todo) => todo.id === todoId)
         if(isSelected){
-          const newSelectedList = selectedTodos.filter((todo) => todo !== todoId)
+          const newSelectedList = selectedTodos.filter((todo) => todo.id !== todoId)
           const newTodoList = todos.map((todo) => {
             if(todo.id === todoId){
               return {...todo, status: "False"}
@@ -167,14 +176,15 @@ export const TodosPage = (props) => {
           const newTodoList = todos.map((todo) => {
             if(todo.id === todoId){
               return {...todo, status: "True"}
-
+              
             }
             else{
               return todo
             }
           })
+          const checkedTodo = todos.find((todo) => todo.id === todoId)
           setTodos(newTodoList)
-          setSelectedTodos([...selectedTodos, todoId])
+          setSelectedTodos([...selectedTodos, checkedTodo])
         }
       }
 

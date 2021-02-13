@@ -1,11 +1,10 @@
 import '../App.css';
-import { Typography, Card, Avatar, Form, Input, Layout, Button, Row, Col, message} from 'antd';
+import { Card, Avatar, Form, Input, Layout, Button, Row, Col, message} from 'antd';
 import { UserOutlined, LockOutlined, MailOutlined  } from '@ant-design/icons';
 import React , { useState, useEffect } from 'react'
 import { fetchAllUsers, createUser} from '../api'
 
-const { Title} = Typography
-const { Header, Content, Footer } = Layout;
+const { Footer } = Layout;
 
 
 export const RegistrationPage = (props) => {

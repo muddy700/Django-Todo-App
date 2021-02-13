@@ -1,12 +1,10 @@
 import '../App.css';
-import { Typography, Card, Avatar, Form, Input, Layout, Button, Row, Col, message} from 'antd';
+import { Card, Avatar, Form, Input, Layout, Button, Row, Col, message} from 'antd';
 import { UserOutlined, LockOutlined  } from '@ant-design/icons';
-import React , { useState, useEffect } from 'react'
-import { fetchAllUsers, authenticateUser} from '../api'
+import React from 'react'
+import { authenticateUser} from '../api'
 
-const { Title} = Typography
-const { Header, Content, Footer } = Layout;
-
+const { Footer } = Layout;
 
 export const LoginPage = (props) => {
     const { setCurrentUser, setActivePage} = props

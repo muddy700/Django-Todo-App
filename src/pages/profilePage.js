@@ -1,11 +1,10 @@
-import { UserOutlined, LockOutlined  } from '@ant-design/icons';
-import React , { useState, useEffect } from 'react'
-import { Typography, Card, Avatar, Layout, Menu, Row, Col, List, Modal, message, Badge, Form, Input, Button  } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import React , { useState } from 'react'
+import { Typography, Card, Avatar, Row, Col, Modal, Button  } from 'antd';
 import { PasswordForm} from './passwordForm'
 import { ProfileForm} from './profileForm'
 
 const { Title} = Typography
-const { Header, Content, Footer } = Layout;
 
 export const ProfilePage = (props) => {
 

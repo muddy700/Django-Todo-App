@@ -3,11 +3,8 @@ import { LoginPage} from './pages/loginPage'
 import { HomePage} from './pages/homePage'
 import { RegistrationPage } from './pages/registrationPage'
 import './App.css';
-import { Typography, Layout, Menu, message } from 'antd';
+import { message } from 'antd';
 import { fetchAllTodos} from './api'
-
-
-
 
   const App = () => {
 

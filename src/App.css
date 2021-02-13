@@ -46,13 +46,6 @@ code {
   /* border-radius: 20%; */
 }
 
-.login-container{
-  padding-top: 3%;
-  padding-bottom: 3%;
-  background-color: lightgray;
-  /* height: 100%; */
-}
-
 .logo {
   width: 120px;
   height: 31px;
@@ -66,8 +59,9 @@ code {
   background: #fff;
   margin-top: 64px;
   height: auto;
-
+  padding-bottom: 15%;
 }
+
 .content-div {
   padding: 2;
 }
@@ -83,9 +77,17 @@ code {
 }
 
 .inner-card {
-  /* background-color: cadetblue; */
+  background-color: cadetblue;
   width: 100%;
 }
+
+.login-container{
+  padding-top: 3%;
+  padding-bottom: 8%;
+  background-color: lightgray;
+  /* height: 100%; */
+}
+
 .footer-tag {
   position: fixed;
   background-color: darkslategrey;

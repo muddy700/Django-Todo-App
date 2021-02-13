@@ -91,13 +91,14 @@ export const HomePage = (props) => {
             {/* <div className="logo" /> */}
             <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']} className="menu-tag">
               <Menu.Item key="1" onClick={changeContent}>Home</Menu.Item>
+              <Menu.Item key="4"><Title level={4} style={{color: 'white'}}>{currentUser.username}.</Title></Menu.Item>
               <Menu.Item key="2" onClick={changeContent}>About</Menu.Item>
               <Menu.Item key="3" onClick={changeContent}>Profile</Menu.Item>
-              <Menu.Item key="4"><Title level={4} style={{color: 'white'}}> Welcome {currentUser.username}.</Title></Menu.Item>
               <Menu.Item key="5" style={{float: 'right'}} onClick={() => setActivePage(1)}>Logout</Menu.Item>
             </Menu>
           </Header>
           <Content className="content-tag" >
+            {/* <Title>mo</Title> */}
             {tabs[activeTab]}
           </Content>
           <Footer className="footer-tag " > <i>Created By Brungas &copy;2021.</i> </Footer>
